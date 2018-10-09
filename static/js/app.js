@@ -1,12 +1,17 @@
+// Function that builds metadata panel
 function buildMetadata(sample) {
 
-  // @TODO: Complete the following function that builds the metadata panel
+  // Url for specific samples
   url = "/metadata/" + sample;
-  // Use `d3.json` to fetch the metadata for a sample
-    // Use d3 to select the panel with id of `#sample-metadata`
+
+  // Fetching metadata for a sample
   d3.json(url).then(function(data) {
     console.log(data);
+    
+    // Use d3 to select the panel with id of `#sample-metadata`
     d3.select("#sample-metadata").html("")
+
+    // Adding key:value pairs to panel
     Object.entries(data).forEach(([key, value]) => {
       console.log(`${key}: ${value}`);
     
@@ -14,30 +19,24 @@ function buildMetadata(sample) {
       .append()
       .text(`${key}: ${value}`)
       .append("br")
-  
 
     });
-
   
   });
 
-    // Use `.html("") to clear any existing metadata
-
-    // Use `Object.entries` to add each key and value pair to the panel
-    // Hint: Inside the loop, you will need to use d3 to append new
-    // tags for each key-value in the metadata.
-
 }
 
+// Function that builds the charts
 function buildCharts(sample) {
 
-  // Use `d3.json` to fetch the sample data for the plots
+  // Url for specific samples
   var url = "/samples/" + sample;
 
+  // Fetching data for samples
   d3.json(url).then(function(data) {
     console.log(data);
 
-    // Build a Bubble Chart using the sample data
+    // Building bubble chart using sample data
     var trace1 = {
       x: data.otu_ids,
       y: data.sample_values,
@@ -64,16 +63,17 @@ function buildCharts(sample) {
       })
     };
 
+    // Function to sort numerical values for JavaScript
     dataSort.sort(function(a, b) {
       return b.sample_values-a.sample_values;
     });
 
-    
+    // Taking top 10 samples
     topTen = dataSort.slice(0,10);
     topTen = topTen.reverse();
     console.log(topTen);
 
-    // Build a pie chart using sample data
+    // Building pie chart using sample data
     var trace2 = {
       values: topTen.map(row => row.sample_values),
       labels: topTen.map(row => row.otu_ids),
@@ -114,6 +114,7 @@ function init() {
 }
 
 function optionChanged(newSample) {
+
   // Fetch new data each time a new sample is selected
   buildCharts(newSample);
   buildMetadata(newSample);

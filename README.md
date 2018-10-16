@@ -1,5 +1,7 @@
 # bb_heroku
 
+Tools: Python Flask powered RESTful API, Heroku, Plotly, d3, JavaScript, SQLAlchemy, SQLite, HTML, Bootstrap
+
 Belly Button Biodiversity is a project done by Dan Fergus and Sara Council in 2011 to study the 
 microbes that inhabit belly buttons. With the data that they have collected, I have used Plotly.js
 to build interactice charts to showcase the results from all the participants. 
